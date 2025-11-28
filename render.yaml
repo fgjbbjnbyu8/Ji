@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: anonymous-world
+    env: docker
+    docker:
+      dockerfile: Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 80
+      - key: ALPHA_USER
+        value: alex
+    regions: ["oregon"]
+    plan: free
+    healthCheckPath: /
+    autoDeploy: true
+    dockerCommand: |
+      docker build -t alpha-server .
+      docker run -p 10000:80 alpha-server
